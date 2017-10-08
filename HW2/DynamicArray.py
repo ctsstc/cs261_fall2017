@@ -21,44 +21,59 @@ class DynamicArray(object):
 
     # Return the size of the dynamic array
     def size(self):
-        #TODO: return the size of the dynamic array this class represents
-        return 1
+        return self._size
 
     # Return the capacity of the dynamic array
     def capacity(self):
-        # TODO: return the capacity of the dynamic array this class represents
-        return 1
+        return self._capacity
 
 
     # Add an element to the end of the dynamic array
     def add(self, value):
-        #TODO: add the passed value to the dynamic array
-        return 1
+        if (self._size >= self._capacity):
+            self._resize()
+        self.put(self._size, value)
+        self._size += 1
+
 
     # Get the value at the position passed in as a parameter
     def get(self, pos):
-        #TODO: return the value currently stored at the passed position
-        return 1
+        return self._data[pos]
 
     # Put a value into the dynamic array at the specified position, overwriting what was there
     def put(self, pos, value):
-        #TODO: put the passed value into the dynamic array at the passed position
-        return 1
+        self._data[pos] = value
 
     # Swap 2 specified values in the dynamic array
     def swap(self, pos1, pos2):
-        #TODO: swap the values at the 2 passed positions with one another
-        return 1
+        hold1 = self.get(pos1)
+        hold2 = self.get(pos2)
+        self.put(pos1, hold2)
+        self.put(pos2, hold1)
+
+    # Returns a slice from the start of the array to the given amount
+    def left(self, amount):
+        return self._data[:amount]
+
+    # Returns a slice starting from the startPos to the end of the array
+    def right(self, startPos):
+        return self._data[startPos:]
 
     # Remove a value from the dynamic array (and return it)
     def remove(self, pos):
-        #TODO: remove the value found at the passed pos and return it
-        return 1
+        goodbye = self.get(pos)
+        # Take the left and shift the right over one then add a new None at the end
+        left = self.left(pos - 1)
+        right = self.right(pos)
+        self._data = left + right + [None]
+        return goodbye
 
     # Resize the underlying array to make room
     def _resize(self):
-        #TODO: resize the underlying array according to certain rules to make room for more values
-        return 1
+        new_size = self._capacity * DynamicArray.RESIZE_MULTIPLIER
+        additional_size = new_size - self._capacity
+        self._capacity = new_size
+        self._data += ([None] * additional_size)
 
     # DO NOT MODIFY THIS PRINT
     # Print the data in a useful way
