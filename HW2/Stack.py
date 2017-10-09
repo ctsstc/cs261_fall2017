@@ -17,28 +17,25 @@ class Stack(object):
 
     # Return whether or not the stack is empty
     def is_empty(self):
-        #TODO: return True or False to answer if the stack is empty
-        return 1
+        return self.size() == 0
 
     # Return the size on the stack
     def size(self):
-        #TODO: return the current size of the stack
-        return 1
+        return self._size
 
     # look at the top of the stack (but don't remove)
     def top(self):
-        #TODO: return the current top of the stack
-        return 1
+        return self._dynamic_array.get(self.size() - 1)
 
     # Push a value on to the top of the stack
     def push(self, value):
-        #TODO: push the pased value onto the stack
-         return 1
+        self._dynamic_array.add(value)
+        self._size += 1
 
     # take the top value off of the stack and return it to the user
     def pop(self):
-        #TODO: pop the top value off the stack
-        return 1
+        self._size -= 1
+        return self._dynamic_array.remove(self.size())
 
     # DO NOT MODIFY THIS PRINT
     def print_stack(self):

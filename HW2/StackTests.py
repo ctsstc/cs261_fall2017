@@ -9,7 +9,7 @@ stack = Stack()
 
 print "Checking basic variable initializations..."
 
-# TODO: tests here
+assert stack.size() == stack._size
 
 stack.print_stack()
 print "done\n"
@@ -18,16 +18,37 @@ print "done\n"
 
 print "Checking is_empty and size..."
 
-# TODO: tests here
+assert stack.is_empty() == True
+
+stack.push("cat")
+assert stack.is_empty() == False
+assert stack.size() == 1
+
+stack.push("doge")
+assert stack.is_empty() == False
+assert stack.size() == 2
+
+stack.pop()
+assert stack.is_empty() == False
+assert stack.size() == 1
+
+stack.pop()
+assert stack.is_empty() == True
+assert stack.size() == 0
 
 stack.print_stack()
+stack._dynamic_array.print_data()
 print "done\n"
 
 ###################################
 
 print "Checking push, top..."
 
-# TODO: tests here
+stack.push("otter")
+assert stack.top() == "otter"
+
+stack.push("water ferret")
+assert stack.top() == "water ferret"
 
 stack.print_stack()
 print "done\n"
@@ -36,7 +57,10 @@ print "done\n"
 
 print "Checking pop..."
 
-# TODO: tests here
+first = stack.pop()
+assert first == "water ferret"
+
+assert stack.pop() == "otter"
 
 stack.print_stack()
 print "done\n"
