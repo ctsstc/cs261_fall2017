@@ -52,21 +52,33 @@ class DynamicArray(object):
         self.put(pos2, hold1)
 
     # Returns a slice from the start of the array to the given amount
+    # Guess these are No-Nos
+    # DEPRECATED
     def left(self, amount):
         return self._data[:amount]
 
     # Returns a slice starting from the startPos to the end of the array
+    # Guess these are No-Nos
+    # DEPRECATED
     def right(self, startPos):
         return self._data[startPos:]
 
     # Remove a value from the dynamic array (and return it)
     def remove(self, pos):
         goodbye = self.get(pos)
-        # Take the left and shift the right over one then add a new None at the end
-        left = self.left(pos - 1)
-        right = self.right(pos)
-        self._data = left + right + [None]
+        # Shift Values Left
+        while self._data[pos] != None and pos < self._size - 1:
+            self._data[pos] = self._data[pos + 1]
+            pos += 1
+        # None'atize the last value
+        self.put(pos, None)
+        self._size -= 1
         return goodbye
+        # Can't use this RIP, I would hope this is a single operation O(3) and faster than 1x1 shifting O(n)
+        # Take the left and shift the right over one then add a new None at the end
+        # left = self.left(pos - 1)
+        # right = self.right(pos)
+        # self._data = left + right + [None]
 
     # Resize the underlying array to make room
     def _resize(self):
