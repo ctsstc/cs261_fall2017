@@ -1,5 +1,11 @@
 from ctypes import *
 
+##############################
+#   DO NOT TOUCH THIS FILE  #
+# This file interfaces your #
+#  python and your C code   #
+##############################
+
 # cast type for consistency (and flexibility)
 TYPE = c_int
 
@@ -9,6 +15,7 @@ ll_lib = CDLL('./linkedList.so')
 # define the linked list struct locally to match that in the C
 class LinkedList(Structure):
     pass
+
 LinkedList._fields_ = [
     ("size", TYPE),
     ("firstLink", POINTER(LinkedList)),
