@@ -66,7 +66,7 @@ class DynamicArray(object):
     # Remove a value from the dynamic array (and return it)
     def remove(self, pos):
         goodbye = self.get(pos)
-        # Shift Values Left
+        # Shift Values Left. I could use swap, but it seems too heavy, it doubles the operations
         while self._data[pos] != None and pos < self._size - 1:
             self._data[pos] = self._data[pos + 1]
             pos += 1

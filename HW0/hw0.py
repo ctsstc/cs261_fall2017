@@ -6,6 +6,6 @@
 
 def hello_world(val=''):
     print "Hello, World " + val
-    return 0;
+    return 0
 
 hello_world('Dingus')
