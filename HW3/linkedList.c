@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 /* TO COMPILE:
- Linux: gcc -shared -Wl,-soname,linkedList -o linkedList.so -fPIC add.c
- Mac: gcc -shared -Wl,-install_name,linkedList.so -o linkedList.so -fPIC test.c
+ Linux: gcc -shared -Wl,-soname,linkedList -o linkedList.so -fPIC linkedList.c
+ Mac: gcc -shared -Wl,-install_name,linkedList.so -o linkedList.so -fPIC linkedList.c
 */
 
 /* Double Link*/
