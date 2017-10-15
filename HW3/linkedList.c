@@ -112,6 +112,9 @@ void _addLinkBefore(struct linkedList *lst, struct DLink *l, TYPE v)
 
 	// Handle Right Update
 	l->prev = link;
+
+	// Update Metadata
+	lst->size++;
 }
 
 /*
@@ -184,7 +187,14 @@ void deleteLinkedList(struct linkedList *lst)
  */
 void _printList(struct linkedList* lst)
 {
-	/* FIXME: you must write this */
+	struct DLink *link = lst->firstLink->next;
+	printf("Linked List: [");
+	while(link != lst->lastLink) 
+	{
+		printf(" [%i] ", link->value);
+		link = link->next;
+	}
+	printf("]");
 
 }
 
@@ -213,6 +223,9 @@ void addFrontList(struct linkedList *lst, TYPE e)
 	// Update pointers
 	fLink->next = link;
 	nextLink->prev = link;
+
+	// Update metadata
+	lst->size++;
 }
 
 /*
@@ -236,6 +249,9 @@ void addBackList(struct linkedList *lst, TYPE e)
 	//Update pointers
 	lLink->prev = link;
 	prevLink->next = link;
+
+	// Update metadata
+	lst->size++;
 }
 
 /*
@@ -260,8 +276,6 @@ TYPE backList(struct linkedList *lst)
 {
 	return(lst->lastLink->prev->value);
 }
-
-
 
 /*
 	removeFrontList
