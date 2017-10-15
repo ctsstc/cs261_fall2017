@@ -204,10 +204,13 @@ void addFrontList(struct linkedList *lst, TYPE e)
 	struct DLink *fLink = lst->firstLink;
 	struct DLink *nextLink = fLink->next;
 
+	// New link
 	struct DLink *link = (struct DLink *)malloc(sizeof(struct DLink));	
 	link->value = e;
 	link->prev = fLink;
-	link->next = fLink->next;
+	link->next = nextLink;
+
+	// Update pointers
 	fLink->next = link;
 	nextLink->prev = link;
 }
@@ -219,9 +222,20 @@ void addFrontList(struct linkedList *lst, TYPE e)
 	pre: lst is not null
 	post: lst is not empty, increased size by 1
 */
-void addBackList(struct linkedList *lst, TYPE e) {
-  
-	/* FIXME: you must write this */
+void addBackList(struct linkedList *lst, TYPE e)
+{
+	struct DLink *lLink = lst->lastLink;
+	struct DLink *prevLink = lLink->prev;
+
+	// New link
+	struct DLink *link = (struct DLink *)malloc(sizeof(struct DLink));
+	link->value = e;
+	link->prev = prevLink;
+	link->next = lLink;
+
+	//Update pointers
+	lLink->prev = link;
+	prevLink->next = link;
 }
 
 /*
@@ -257,8 +271,7 @@ TYPE backList(struct linkedList *lst)
 	post: size is reduced by 1
 */
 void removeFrontList(struct linkedList *lst) {
-
-
+	
 }
 
 /*
