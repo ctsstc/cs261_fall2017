@@ -30,8 +30,20 @@ struct linkedList{
 	post: lst size is 0
 */
 
+
 void _initList (struct linkedList *lst) {
-  /* FIXME: you must write this */
+	// Create Sentinels
+	struct DLink *fLink = (struct DLink *)malloc(sizeof(struct DLink));	
+	struct DLink *lLink = (struct DLink *)malloc(sizeof(struct DLink));
+	
+	// Set linkedList
+	lst->firstLink = fLink;
+	lst->lastLink = lLink;
+	lst->size = 0;	
+
+	// Set Sentinels
+	fLink->next = lLink; // prev NULL
+	lLink->prev = fLink; // next NULL
 }
 
 /*
@@ -43,15 +55,40 @@ void _initList (struct linkedList *lst) {
 
 struct linkedList *createLinkedList()
 {
-	struct linkedList *newList = malloc(sizeof(struct linkedList));
+	struct linkedList *newList = (struct linkedList *)malloc(sizeof(struct linkedList));
 	_initList(newList);
 	return(newList);
 }
 
 /*
+	_findLink
+	param: lst the linkedList
+	param: l the link to find
+	pre: lst is not null
+	pre: l is not null
+	post: lst is not empty
+*/
+struct DLink *_findLink(struct linkedList *lst, TYPE v)
+{
+	// Start with the link after our starting sentinel 
+	struct DLink *link = lst->firstLink->next;
+	// while(link != l && link != lst->lastLink) { // this prevents you from adding a link before the lst->lastLink
+	while(link->value != v) {
+		link = link->next;
+	}
+
+	if (link->value == v) {
+		return link;
+	}
+	else {
+		return NULL;
+	}
+}
+
+/*
 	_addLinkBeforeBefore
 	param: lst the linkedList
-	param: l the  link to add before
+	param: l the link to add before
 	param: v the value to add
 	pre: lst is not null
 	pre: l is not null
@@ -62,23 +99,43 @@ struct linkedList *createLinkedList()
 
 void _addLinkBefore(struct linkedList *lst, struct DLink *l, TYPE v)
 {
-	/* FIXME: you must write this */
+	struct DLink *prevLink = l->prev;
 
+	// Create New Link
+	struct DLink *link = malloc(sizeof(struct DLink));
+	link->value = v;
+	link->prev = prevLink;
+	link->next = l;
+
+	// Handle Left Update
+	prevLink->next = link;
+
+	// Handle Right Update
+	l->prev = link;
 }
 
 /*
 	_removeLink
 	param: lst the linkedList
-	param: l the linke to be removed
+	param: l the link to be removed
 	pre: lst is not null
 	pre: l is not null
 	post: lst size is reduced by 1
 */
 void _removeLink(struct linkedList *lst, struct DLink *l)
 {
+	struct DLink *next = l->next;
+	struct DLink *prev = l->prev;
 
-	/* FIXME: you must write this */
-	
+	// Drop Link
+	prev->next = next;
+	next->prev = prev;
+
+	// Free Memory - You're FREEE!!!
+	free(l);
+
+	// Update Metadata
+	lst->size--;
 }
 
 /*
@@ -88,9 +145,7 @@ void _removeLink(struct linkedList *lst, struct DLink *l)
 	post: none
 */
 int isEmptyList(struct linkedList *lst) {
- 	/* FIXME: you must write this */
-	/*temporary return value...you may need to change this */
-	return(1);
+	return(lst->size == 0);
 }
 
 /* De-allocate all links of the list
@@ -104,10 +159,10 @@ void freeLinkedList(struct linkedList *lst)
 	while(!isEmptyList(lst)) {
 		/* remove the link right after the first sentinel */
 		_removeLink(lst, lst->firstLink->next);
-	}		
+	}
 	/* remove the first and last sentinels */
 	free(lst->firstLink);
-	free(lst->lastLink);	
+	free(lst->lastLink);
 }
 
 /* 	Deallocate all the links and the linked list itself. 
@@ -146,9 +201,15 @@ void _printList(struct linkedList* lst)
 */
 void addFrontList(struct linkedList *lst, TYPE e)
 {
+	struct DLink *fLink = lst->firstLink;
+	struct DLink *nextLink = fLink->next;
 
-	/* FIXME: you must write this */
-	
+	struct DLink *link = (struct DLink *)malloc(sizeof(struct DLink));	
+	link->value = e;
+	link->prev = fLink;
+	link->next = fLink->next;
+	fLink->next = link;
+	nextLink->prev = link;
 }
 
 /*
@@ -171,9 +232,7 @@ void addBackList(struct linkedList *lst, TYPE e) {
 	post: none
 */
 TYPE frontList (struct linkedList *lst) {
-	/* FIXME: you must write this */
-	/*temporary return value...you may need to change this */
-	return(1);
+	return(lst->firstLink->next->value);
 }
 
 /*
@@ -185,9 +244,7 @@ TYPE frontList (struct linkedList *lst) {
 */
 TYPE backList(struct linkedList *lst)
 {
-	/* FIXME: you must write this */
-	/*temporary return value...you may need to change this */
-	return(1);
+	return(lst->lastLink->prev->value);
 }
 
 
@@ -200,7 +257,7 @@ TYPE backList(struct linkedList *lst)
 	post: size is reduced by 1
 */
 void removeFrontList(struct linkedList *lst) {
-   	/* FIXME: you must write this */
+
 
 }
 
