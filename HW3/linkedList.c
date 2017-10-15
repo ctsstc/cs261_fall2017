@@ -271,18 +271,17 @@ TYPE backList(struct linkedList *lst)
 	post: size is reduced by 1
 */
 void removeFrontList(struct linkedList *lst) {
-	
+	_removeLink(lst, lst->firstLink->next);
 }
 
 /*
 	removeBackList
 	param: lst the linkedList
 	pre: lst is not null
-	pre:lst is not empty
+	pre: lst is not empty
 	post: size reduced by 1
 */
 void removeBackList(struct linkedList *lst)
-{	
-	/* FIXME: you must write this */
-	
+{
+	_removeLink(lst, lst->lastLink->prev);
 }
