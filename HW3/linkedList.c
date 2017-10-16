@@ -194,7 +194,7 @@ void _printList(struct linkedList* lst)
 		printf(" [%i] ", link->value);
 		link = link->next;
 	}
-	printf("]");
+	printf("] ");
 
 }
 
@@ -211,21 +211,7 @@ void _printList(struct linkedList* lst)
 */
 void addFrontList(struct linkedList *lst, TYPE e)
 {
-	struct DLink *fLink = lst->firstLink;
-	struct DLink *nextLink = fLink->next;
-
-	// New link
-	struct DLink *link = (struct DLink *)malloc(sizeof(struct DLink));	
-	link->value = e;
-	link->prev = fLink;
-	link->next = nextLink;
-
-	// Update pointers
-	fLink->next = link;
-	nextLink->prev = link;
-
-	// Update metadata
-	lst->size++;
+	_addLinkBefore(lst, lst->firstLink->next, e);
 }
 
 /*
@@ -237,21 +223,7 @@ void addFrontList(struct linkedList *lst, TYPE e)
 */
 void addBackList(struct linkedList *lst, TYPE e)
 {
-	struct DLink *lLink = lst->lastLink;
-	struct DLink *prevLink = lLink->prev;
-
-	// New link
-	struct DLink *link = (struct DLink *)malloc(sizeof(struct DLink));
-	link->value = e;
-	link->prev = prevLink;
-	link->next = lLink;
-
-	//Update pointers
-	lLink->prev = link;
-	prevLink->next = link;
-
-	// Update metadata
-	lst->size++;
+	_addLinkBefore(lst, lst->lastLink, e);
 }
 
 /*
