@@ -25,21 +25,21 @@ class Queue(object):
 
     # THIS IS COMMENTED OUT SINCE YOU'RE ONLY IMPLEMENTING THE QUEUE
     # # add a value to the front of the queue
-    # def addFront(self):
+    # def addFront(self, val):
     #     #TODO: add a value to the front of the queue
     #     return 1
 
     # remove a value from the front of the queue
     def removeFront(self):
-        return removeFrontList(self._linked_list)
+        removeFrontList(self._linked_list)
 
     # return the front (first) value in the queue
     def front(self):
         return frontList(self._linked_list)
 
     # add a value to the back of the queue
-    def addBack(self):
-        return addBackList(self._linked_list)
+    def addBack(self, val):
+        addBackList(self._linked_list, val)
 
     # THIS IS COMMENTED OUT SINCE YOU'RE ONLY IMPLEMENTING THE QUEUE
     # # remove a value from the back of the queue

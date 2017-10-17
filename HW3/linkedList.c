@@ -188,10 +188,10 @@ void deleteLinkedList(struct linkedList *lst)
 void _printList(struct linkedList* lst)
 {
 	struct DLink *link = lst->firstLink->next;
-	printf("Linked List: [");
+	printf("Linked List: [↔");
 	while(link != lst->lastLink) 
 	{
-		printf(" [%i] ", link->value);
+		printf("[%i]↔", link->value);
 		link = link->next;
 	}
 	printf("] ");
