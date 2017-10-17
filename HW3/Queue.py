@@ -31,18 +31,15 @@ class Queue(object):
 
     # remove a value from the front of the queue
     def removeFront(self):
-        #TODO: remove a value from the front of the queue
-        return 1
+        return removeFrontList(self._linked_list)
 
     # return the front (first) value in the queue
     def front(self):
-        #TODO: return the front (first) value in the queue
-        return 1
+        return frontList(self._linked_list)
 
     # add a value to the back of the queue
     def addBack(self):
-        # TODO: add a value to the back of the queue
-        return 1
+        return addBackList(self._linked_list)
 
     # THIS IS COMMENTED OUT SINCE YOU'RE ONLY IMPLEMENTING THE QUEUE
     # # remove a value from the back of the queue
@@ -52,8 +49,7 @@ class Queue(object):
 
     # return the back (last) value in the queue
     def back(self):
-        # TODO: return the back (last) value in the queue
-        return 1
+        return backList(self._linked_list)
 
     # DO NOT MODIFY THIS PRINT
     def print_queue(self):
