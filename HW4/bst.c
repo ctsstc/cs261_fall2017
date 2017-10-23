@@ -3,8 +3,8 @@
  Implementation of the binary search tree data structure.
 
  TO COMPILE:
- Linux/Win: gcc -shared -Wl,-soname,bsT -o bsT.so -fPIC bsT.c
- Mac: gcc -shared -Wl,-install_name,bsT.so -o bsT.so -fPIC bsT.c
+ Linux/Win: gcc -shared -Wl,-soname,bsT -o bsT.so -fPIC bst.c
+ Mac: gcc -shared -Wl,-install_name,bsT.so -o bsT.so -fPIC bst.c
 
  ***
 
