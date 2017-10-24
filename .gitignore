@@ -111,7 +111,8 @@ HW7/*
 HW8/*
 HW9/*
 
-*/.idea/*
+.idea/
+*.zip
 
 test-hw0.py
 
