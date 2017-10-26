@@ -155,6 +155,15 @@ int compare(TYPE left, TYPE right)
 
 }
 
+struct Node *_newNode(TYPE val) 
+{
+	struct Node *node = (struct Node *)malloc(sizeof(struct Node));
+	node->val = val;
+	//node->left = NULL;
+	//node->right = NULL;
+	return node;
+}
+
 /*----------------------------------------------------------------------------*/
 /*
  recursive helper function to add a node to the binary search tree.
@@ -166,6 +175,41 @@ int compare(TYPE left, TYPE right)
 struct Node *_addNode(struct Node *cur, TYPE val)
 {
 	// TODO: Write this
+
+	// Root Node
+	if (cur == 0) {
+		cur = _newNode(val);
+	}
+	else {
+		switch(compare(val, cur->val)) {
+			case -1:
+				// No more left to go
+				if(cur->left == NULL)
+				{
+					// It is smaller than cur->val, create and add it to the left of cur
+					cur->left = _newNode(val);
+				}
+				else
+				{
+					// there's still more left to go, recurse!
+					_addNode(cur->left, val);
+				}
+				break;
+			case 1:
+				if (cur->right == NULL)
+				{
+
+				}
+				else
+				{
+
+				}
+				_addNode(cur->right, val);
+				break;
+			case 0:
+				break;
+		}
+	}
 	return NULL;
 }
 
@@ -206,7 +250,7 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 /*
  helper function to find the left most child of a node
  return the value of the left most child of cur
- param: cur		the current node
+ param: cur the current node
  pre:	cur is not null
  post: none
  */
