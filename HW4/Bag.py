@@ -21,19 +21,17 @@ class Bag(object):
 
     # return T/F whether or not the value is in the bag
     def contains(self, value):
-        #TODO: return T/F whether or not the value is in the bag
-        return 1
+        return containsBSTree(self._bst, value) == 1 ? True : False
     
     # add a value to the bag
     def add(self, value):
-        #TODO: add a value to the bag
-        return 1
+        addBSTree(self._bst, value)
 
     # Remove a value from the bag
     def remove(self, value):
-        # TODO: Remove a value from the bag
         # Returning that value is optional
-        return 1
+        # I chose not to return because it seems redundant and the current call doesn't return anything
+        removeBSTree(self._bst, value)
 
     #Iterators are coming! (traversals, actually...)
     
