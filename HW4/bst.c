@@ -198,13 +198,14 @@ struct Node *_addNode(struct Node *cur, TYPE val)
 			case 1:
 				if (cur->right == NULL)
 				{
-
+					// we are larger and have found our home
+					cur->right = _newNode(val);
 				}
 				else
 				{
-
+					// right isn't available yet, recurse!
+					_addNode(cur->right, val);
 				}
-				_addNode(cur->right, val);
 				break;
 			case 0:
 				break;
