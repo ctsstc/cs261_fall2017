@@ -159,8 +159,8 @@ struct Node *_newNode(TYPE val)
 {
 	struct Node *node = (struct Node *)malloc(sizeof(struct Node));
 	node->val = val;
-	//node->left = NULL;
-	//node->right = NULL;
+	node->left = NULL;
+	node->right = NULL;
 	return node;
 }
 
@@ -304,7 +304,21 @@ struct Node *_removeLeftMost(struct Node *cur)
 /*----------------------------------------------------------------------------*/
 struct Node *_removeNode(struct Node *cur, TYPE val)
 {
-	// TODO: Write this
+	switch(compare(val, cur->val))
+	{
+		// val is smaller than current, meander west my child
+		case -1:
+			_removeNode(cur->left, val);
+			break;
+		// val is greater than current, 
+		case 1:
+			_removeNode(cur->right, val);
+			break;
+		// Found it coach!
+		case 0:
+			free(cur);
+			break;
+	}
   return NULL;
 }
 /*
