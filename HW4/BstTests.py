@@ -6,9 +6,9 @@
 from BstInterface import *
 
 def print_tree(bst):
-    print "v"*150 
+    print "v"*100 
     printTreeDepth(bst)
-    print "^"*150
+    print "^"*100
 
 bst = newBSTree()
 
@@ -37,6 +37,7 @@ addBSTree(bst, 60)
 addBSTree(bst, 150)
 addBSTree(bst, 160)
 addBSTree(bst, 140)
+assert containsBSTree(bst, 140) == 1
 addBSTree(bst, 140) #NOT A TYPO
 
 print sizeBSTree(bst)
@@ -53,8 +54,15 @@ print_tree(bst)
 
 print "Checking removeBSTree, function(s)..."
 
+print sizeBSTree(bst)
+
 removeBSTree(bst, 50)
+
+print_tree(bst)
+
 removeBSTree(bst, 150)
+
+print sizeBSTree(bst)
 
 assert sizeBSTree(bst) == 5
 

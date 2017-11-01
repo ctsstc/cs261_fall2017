@@ -21,7 +21,7 @@ class Bag(object):
 
     # return T/F whether or not the value is in the bag
     def contains(self, value):
-        return containsBSTree(self._bst, value) == 1 ? True : False
+        return True if (containsBSTree(self._bst, value) == 1) else False
     
     # add a value to the bag
     def add(self, value):
@@ -38,6 +38,6 @@ class Bag(object):
     def print_bag(self):
         ## NOTE: This actually just prints the tree, obviously
         # We need iterators to really print the bag (soon!)
-        print "v"*150 
+        print "v"*100 
         printTreeDepth(self._bst)
-        print "^"*150
+        print "^"*100
