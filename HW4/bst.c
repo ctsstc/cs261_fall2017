@@ -227,12 +227,13 @@ void addBSTree(struct BSTree *tree, TYPE val)
 	if(tree->root == NULL)
 	{
 		tree->root = _newNode(val);
+		tree->cnt++;
 	}
-	else 
+	else //if(containsBSTree(tree, val) == 0)
 	{
 		_addNode(tree->root, val);
+		tree->cnt++;
 	}
-	tree->cnt++;
 }
 
 
@@ -258,13 +259,28 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 			// Found it!
 			case 0:
 				return 1;
+				break;
 			// Mozy Left
 			case -1:
-				cur = cur->left;
+				if(cur->left == NULL)
+				{
+					return 0;
+				}
+				else
+				{
+					cur = cur->left;
+				}
 				break;
 			// Meander Right™
 			case 1:
-				cur = cur->right;
+				if(cur->right == NULL)
+				{
+					return 0;
+				}
+				else
+				{
+					cur = cur->right;
+				}
 				break;
 		}
 	} while(cur->left != NULL && cur->right != NULL);
