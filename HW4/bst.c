@@ -291,7 +291,7 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 	}
 	else
 	{
-		return 0;		
+		return 0;
 	}
 }
 
@@ -312,7 +312,6 @@ TYPE _leftMost(struct Node *cur)
 	}
 	return cur->val;
 }
-
 
 /*
  recursive helper function to remove the left most child of a node
@@ -349,23 +348,42 @@ struct Node *_removeLeftMost(struct Node *cur)
 		val is not null
  */
 /*----------------------------------------------------------------------------*/
-struct Node *_removeNode(struct Node *cur, TYPE val)
+struct Node *_removeNode(struct BSTree *tree, struct Node *cur, TYPE val)
 {
+	printf("Comparing: %d val: %d from cur->val: %d\n", compare(val, cur->val), val, cur->val);
 	switch(compare(val, cur->val))
 	{
 		// val is smaller than current, meander west my child
 		case -1:
-			_removeNode(cur->left, val);
+			return _removeNode(tree, cur->left, val);
 			break;
 		// val is greater than current, 
 		case 1:
-			_removeNode(cur->right, val);
+			return _removeNode(tree, cur->right, val);
 			break;
 		// Found it coach!
 		case 0:
-			// TODO Logic here to remove node and patch things up
+			printf("Found val: %d from cur->val: %d\n", val, cur->val);
+			if(cur->right == NULL)
+			{
+
+			}
+			else
+			{
+				// Find our new king
+				int newVal = _leftMost(cur->right);
+				// Set the value
+				cur->val = newVal;
+				printTreeDepth(tree);
+				// Remove the duplicate
+				struct Node * rights = _removeLeftMost(cur->right);
+				// Handle orphaned children, update link
+				if(rights != NULL)
+				{
+					cur = rights;
+				}
+			}
 			return cur;
-			break;
 	}
   return NULL;
 }
@@ -381,7 +399,7 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 void removeBSTree(struct BSTree *tree, TYPE val)
 {
 	if (containsBSTree(tree, val)) {
-		tree->root = _removeNode(tree->root, val);
+		tree->root = _removeNode(tree, tree->root, val);
 		tree->cnt--;
 	}
 }
