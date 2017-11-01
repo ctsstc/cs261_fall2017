@@ -174,8 +174,6 @@ struct Node *_newNode(TYPE val)
  */
 struct Node *_addNode(struct Node *cur, TYPE val)
 {
-	// TODO: Write this
-
 	// Root Node
 	if (cur == 0) {
 		cur = _newNode(val);
@@ -226,7 +224,14 @@ struct Node *_addNode(struct Node *cur, TYPE val)
  */
 void addBSTree(struct BSTree *tree, TYPE val)
 {
-	tree->root = _addNode(tree->root, val);
+	if(tree->root == NULL)
+	{
+		tree->root = _newNode(val);
+	}
+	else 
+	{
+		_addNode(tree->root, val);
+	}
 	tree->cnt++;
 }
 
@@ -244,8 +249,26 @@ void addBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 int containsBSTree(struct BSTree *tree, TYPE val)
 {
-	// TODO: Write this
-    return 0;
+	struct Node * cur = tree->root;
+	do
+	{
+		// making some blind assumptions here...
+		switch (compare(val, cur->val))
+		{
+			// Found it!
+			case 0:
+				return 1;
+			// Mozy Left
+			case -1:
+				cur = cur->left;
+				break;
+			// Meander Right™
+			case 1:
+				cur = cur->right;
+				break;
+		}
+	} while(cur->left != NULL && cur->right != NULL);
+	return 0;
 }
 
 /*
@@ -316,7 +339,8 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 			break;
 		// Found it coach!
 		case 0:
-			free(cur);
+			// TODO Logic here to remove node and patch things up
+			return cur;
 			break;
 	}
   return NULL;
