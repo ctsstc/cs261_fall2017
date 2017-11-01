@@ -259,8 +259,11 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 TYPE _leftMost(struct Node *cur)
 {
-	// TODO: Write this
-	return NULL;
+	while(cur->left != NULL) 
+	{
+		cur = cur->left;
+	}
+	return cur->val;
 }
 
 
@@ -278,8 +281,16 @@ Note:  If you do this iteratively, the above hint does not apply.
 /*----------------------------------------------------------------------------*/
 struct Node *_removeLeftMost(struct Node *cur)
 {
-	// TODO: Write this
-	return NULL;
+	if (cur->left != NULL)
+	{
+		return _removeLeftMost(cur->left);
+	}
+	else
+	{
+		struct Node * ret = cur->right;
+		free(cur);
+		return ret;
+	}
 }
 /*
  recursive helper function to remove a node from the tree
