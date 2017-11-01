@@ -229,7 +229,7 @@ void addBSTree(struct BSTree *tree, TYPE val)
 		tree->root = _newNode(val);
 		tree->cnt++;
 	}
-	else //if(containsBSTree(tree, val) == 0)
+	else if(containsBSTree(tree, val) == 0)
 	{
 		_addNode(tree->root, val);
 		tree->cnt++;
@@ -259,7 +259,6 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 			// Found it!
 			case 0:
 				return 1;
-				break;
 			// Mozy Left
 			case -1:
 				if(cur->left == NULL)
@@ -284,7 +283,16 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 				break;
 		}
 	} while(cur->left != NULL && cur->right != NULL);
-	return 0;
+
+	// No more children left to traverse see if we ended up finding the value
+	if (cur->val == val)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;		
+	}
 }
 
 /*
