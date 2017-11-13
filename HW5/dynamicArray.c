@@ -584,12 +584,12 @@ void _buildHeap(DynArr *heap)
 void sortHeap(DynArr *heap)
 {
   /* TODO */
-	int last = sizeDynArr(heap) - 1;
+	int lastIndex = sizeDynArr(heap) - 1;
 	_buildHeap(heap);
 
-	for (int i = last; i >= 0; i--)
+	for (int i = lastIndex; i >= 0; i--)
 	{
-		swapDynArr(heap, 0, last);
-		_adjustHeap(heap, last, 0);
+		swapDynArr(heap, 0, i);
+		_adjustHeap(heap, i, 0);
 	}
 }
