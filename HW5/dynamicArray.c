@@ -460,24 +460,18 @@ TYPE getMinHeap(DynArr *heap)
 */
 void addHeap(DynArr *heap, TYPE val)
 {
-	/* TODO */
-	int parent;
+	/* ✅ TODO */
 	int pos = sizeDynArr(heap);
+	int parent = (pos - 1) / 2;
+	
 	addDynArr(heap, val);
 
 	// Bubble Up
-	while(pos != 0)
+	while(pos != 0 && compare(getDynArr(heap, pos), getDynArr(heap, parent)) == -1)
 	{
+		swapDynArr(heap, parent, pos);
+		pos = parent;
 		parent = (pos - 1) / 2;
-		if(compare(getDynArr(heap, pos), getDynArr(heap, parent)) == -1)
-		{
-			swapDynArr(heap, parent, pos);
-			pos = parent;
-		}
-		else
-		{
-			return;
-		}
 	}
 
 	/*addDynArr(heap, val);
