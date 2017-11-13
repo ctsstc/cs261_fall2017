@@ -99,9 +99,10 @@ void loadList(DynArr *heap, FILE *filePtr)
 void printList(DynArr *heap)
 {
   /* ✅ TODO */
+	sortHeap(heap);
 	struct Task* task;
 	printf("Priority - Description\n");
-	for (int i = 0; i < sizeDynArr(heap); i++)
+	for (int i = sizeDynArr(heap) - 1; i >= 0 ; i--)
 	{
 		task = getDynArr(heap, i);
 		printf("%d - %s\n", task->priority, task->description);
