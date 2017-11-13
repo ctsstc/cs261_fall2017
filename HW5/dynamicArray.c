@@ -8,7 +8,7 @@ struct DynArr
 {
 	TYPE *data;		/* pointer to the data array */
 	int size;		/* Number of elements in the array */
-	int capacity;	/* capacity ofthe array */
+	int capacity;	/* capacity of the array */
 };
 
 struct bag
@@ -52,7 +52,7 @@ DynArr* createDynArr(int cap)
 {
 	DynArr *r;
 	assert(cap > 0);
-	r = malloc(sizeof( DynArr));
+	r = (DynArr *) malloc(sizeof(DynArr));
 	assert(r != 0);
 	_initDynArr(r,cap);
 	return r;
@@ -433,8 +433,10 @@ void _adjustHeap(DynArr *heap, int max, int pos);
 */
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
-  /* TODO */
-  return 0;
+	/* ✅ TODO */
+	TYPE i1 = getDynArr(heap,i);
+	TYPE i2 = getDynArr(heap,j);
+  return compare(i1, i2) == -1 ? i : j;
 }
 
 /*	Get the first node, which has the min priority, from the heap
@@ -445,10 +447,8 @@ int _smallerIndexHeap(DynArr *heap, int i, int j)
 */
 TYPE getMinHeap(DynArr *heap)
 {
-  /* TODO */
-
-  /* Temporary returning NULL */
-  return NULL;
+  /* ✅ TODO */
+  return getDynArr(heap, 0);
 }
 
 /*	Add a node to the heap
@@ -460,8 +460,29 @@ TYPE getMinHeap(DynArr *heap)
 */
 void addHeap(DynArr *heap, TYPE val)
 {
-    /* TODO */
+	/* TODO */
+	int parent;
+	int pos = sizeDynArr(heap);
+	addDynArr(heap, val);
 
+	// Bubble Up
+	while(pos != 0)
+	{
+		parent = (pos - 1) / 2;
+		if(compare(getDynArr(heap, pos), getDynArr(heap, parent)) == -1)
+		{
+			swapDynArr(heap, parent, pos);
+			pos = parent;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	/*addDynArr(heap, val);
+	int size = sizeDynArr(heap);
+	_adjustHeap(heap, size, size);*/
 }
 
 /*	Adjust heap to maintain heap property
@@ -474,7 +495,19 @@ void addHeap(DynArr *heap, TYPE val)
 */
 void _adjustHeap(DynArr *heap, int max, int pos)
 {
-   /* TODO */
+	/* TODO */
+	int left = pos * 2 + 1;
+	int right = pos * 2 + 2;
+
+	if (right < max)
+	{
+
+	}
+	else if (left < max)
+	{
+
+	}
+
 }
 
 /*	Remove the first node, which has the min priority, from the heap
@@ -485,7 +518,8 @@ void _adjustHeap(DynArr *heap, int max, int pos)
 */
 void removeMinHeap(DynArr *heap)
 {
-   /* TODO */
+	 /* TODO */
+	 
 
 }
 
