@@ -451,6 +451,21 @@ TYPE getMinHeap(DynArr *heap)
   return getDynArr(heap, 0);
 }
 
+int _getParent(int index)
+{
+	return (index - 1) / 2;
+}
+
+int _getLeft(int index)
+{
+	return index * 2 + 1;
+}
+
+int _getRight(int index)
+{
+	return index * 2 + 2;
+}
+
 /*	Add a node to the heap
 
 	param: 	heap	pointer to the heap
@@ -462,7 +477,7 @@ void addHeap(DynArr *heap, TYPE val)
 {
 	/* ✅ TODO */
 	int pos = sizeDynArr(heap);
-	int parent = (pos - 1) / 2;
+	int parent = _getParent(pos);
 	
 	addDynArr(heap, val);
 
@@ -471,12 +486,8 @@ void addHeap(DynArr *heap, TYPE val)
 	{
 		swapDynArr(heap, parent, pos);
 		pos = parent;
-		parent = (pos - 1) / 2;
+		parent = _getParent(pos);
 	}
-
-	/*addDynArr(heap, val);
-	int size = sizeDynArr(heap);
-	_adjustHeap(heap, size, size);*/
 }
 
 /*	Adjust heap to maintain heap property
@@ -489,17 +500,39 @@ void addHeap(DynArr *heap, TYPE val)
 */
 void _adjustHeap(DynArr *heap, int max, int pos)
 {
-	/* TODO */
-	int left = pos * 2 + 1;
-	int right = pos * 2 + 2;
+	/* ✅ TODO */
+	int leftIndex = _getLeft(pos);
+	int rightIndex = _getRight(pos);
+	TYPE current = getDynArr(heap, pos);
 
-	if (right < max)
+	if (rightIndex < max)
 	{
-
+		/* Have two children? */
+		/* Get index of smallest child (_minIdx). */
+		int smallerIndex = _smallerIndexHeap(heap, leftIndex, rightIndex);
+		/* Compare smallest child to pos. */
+		TYPE smaller = getDynArr(heap, smallerIndex);
+		if (compare(smaller, current) == -1)
+		{
+			// Percolation
+			swapDynArr(heap, smallerIndex, pos);
+			// Regress
+			_adjustHeap(heap, max, smallerIndex);
+		}
 	}
-	else if (left < max)
+	else if (leftIndex < max)
 	{
-
+		TYPE left = getDynArr(heap, leftIndex);
+		/* Have only one child. */
+		/* Compare child to parent. */
+		if (compare(left, current) == -1)
+		{
+			// Percolate
+			swapDynArr(heap, leftIndex, pos);
+			// Regress
+			_adjustHeap(heap, max, leftIndex);
+		}
+		/* If necessary, swap and call _adjustHeap(max, leftIdx). */
 	}
 
 }
@@ -512,9 +545,15 @@ void _adjustHeap(DynArr *heap, int max, int pos)
 */
 void removeMinHeap(DynArr *heap)
 {
-	 /* TODO */
-	 
-
+	/* ✅ TODO */
+	int lastIndex = sizeDynArr(heap) - 1; 
+	TYPE last = getDynArr(heap, lastIndex);
+	// Put the last into the first
+	putDynArr(heap, 0, last);
+	// Remove the last which is now a duplicate
+	removeAtDynArr(heap, lastIndex);
+	// Percolate Down
+	_adjustHeap(heap, lastIndex, 0);
 }
 
 /* builds a heap from an arbitrary dynArray
@@ -526,7 +565,13 @@ void removeMinHeap(DynArr *heap)
 
 void _buildHeap(DynArr *heap)
 {
-    /* TODO */
+    /* ✅ TODO */
+		// Half point for all interior "nodes"; "leaves" will be greater
+		int start = (sizeDynArr(heap) / 2) - 1;
+		for (int i = start; i >= 0; i--)
+		{
+			_adjustHeap(heap, start, i);
+		}
 }
 /*
     In-place sort of the heap
@@ -541,4 +586,3 @@ void sortHeap(DynArr *heap)
    /* TODO */
 
 }
-

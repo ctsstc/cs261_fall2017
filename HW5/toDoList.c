@@ -14,7 +14,11 @@
 */
 Task* createTask (int priority, char *desc)
 {
-	/* TODO */
+	/* ✅ TODO */
+	struct Task* task = (struct Task*) malloc(sizeof(struct Task));
+	task->priority = priority;
+	strcpy(task->description, desc);
+	return task;
 }
 
 /*  Save the list to a file
@@ -94,7 +98,15 @@ void loadList(DynArr *heap, FILE *filePtr)
 */
 void printList(DynArr *heap)
 {
-  /* TODO */
+  /* ✅ TODO */
+	struct Task* task;
+	printf("Priority - Description\n");
+	for (int i = 0; i < sizeDynArr(heap); i++)
+	{
+		task = getDynArr(heap, i);
+		printf("%d - %s\n", task->priority, task->description);
+	}
+	printf("\n");
 }
 
 /*  Delete the list
