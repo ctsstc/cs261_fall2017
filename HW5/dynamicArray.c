@@ -532,7 +532,6 @@ void _adjustHeap(DynArr *heap, int max, int pos)
 			// Regress
 			_adjustHeap(heap, max, leftIndex);
 		}
-		/* If necessary, swap and call _adjustHeap(max, leftIdx). */
 	}
 
 }
@@ -568,9 +567,10 @@ void _buildHeap(DynArr *heap)
     /* ✅ TODO */
 		// Half point for all interior "nodes"; "leaves" will be greater
 		int start = (sizeDynArr(heap) / 2) - 1;
+		int lastIndex = sizeDynArr(heap);
 		for (int i = start; i >= 0; i--)
 		{
-			_adjustHeap(heap, start, i);
+			_adjustHeap(heap, lastIndex, i);
 		}
 }
 /*
