@@ -37,6 +37,21 @@ int main(int argc, const char * argv[])
 	addHeap(mainList, task9);
 	addHeap(mainList, task10);
 
+	/*struct DynArr* rawDynArr = createDynArr(6);
+	addDynArr(rawDynArr, createTask(9, "9"));
+	addDynArr(rawDynArr, createTask(3, "3"));
+	addDynArr(rawDynArr, createTask(8, "8"));
+	addDynArr(rawDynArr, createTask(4, "4"));
+	addDynArr(rawDynArr, createTask(5, "5"));
+	addDynArr(rawDynArr, createTask(7, "7"));
+	printList(rawDynArr);
+	_buildHeap(rawDynArr);
+	printList(rawDynArr);
+
+	sortHeap(rawDynArr);
+	printList(rawDynArr);
+*/
+
 #ifdef TESTHEAP
 	for(i = 0; i < sizeDynArr(mainList);i++)
 		printf("DynArr[%d] = %d\n", i, getDynArr(mainList,i).priority);
