@@ -18,6 +18,18 @@ struct hashMap {
 };
 typedef struct hashMap hashMap;
 
+int stringHash(char * str)
+{
+	if (HASHING_FUNCTION == 1)
+	{
+		return stringHash1(str);
+	}
+	else if(HASHING_FUNCTION == 2)
+	{
+		return stringHash2(str);
+	}
+}
+
 /*the first hashing function you can use*/
 int stringHash1(char * str)
 {
@@ -55,7 +67,7 @@ void _initMap (struct hashMap * ht, int tableSize)
 hashMap *createMap(int tableSize) {
 	assert(tableSize > 0);
 	hashMap *ht;
-	ht = malloc(sizeof(hashMap));
+	ht = (hashMap*)malloc(sizeof(hashMap));
 	assert(ht != 0);
 	_initMap(ht, tableSize);
 	return ht;
@@ -102,7 +114,7 @@ This isn't elegant. Values have to be moved.
 */
 void _setTableSize(struct hashMap * ht, int newTableSize)
 {
-	/*TODO*/			
+	/*TODO*/
 }
 
 /*
@@ -118,8 +130,8 @@ void _setTableSize(struct hashMap * ht, int newTableSize)
  or equal LOAD_FACTOR_THRESHOLD (defined in hashMap.h).
  */
 void insertMap (struct hashMap * ht, KeyType k, ValueType v)
-{  
-	/*TODO*/	
+{
+	/*TODO*/
 }
 
 /*
@@ -162,9 +174,8 @@ void removeKey (struct hashMap * ht, KeyType k)
  */
 int size (struct hashMap *ht)
 {  
-	/*TODO*/
-	return 0;
-	
+	/* ✅ TODO*/
+	return ht->count;
 }
 
 /*
@@ -172,8 +183,8 @@ int size (struct hashMap *ht)
  */
 int capacity(struct hashMap *ht)
 {  
-	/*TODO*/
-	return 0;
+	/* ✅ TODO*/
+	return ht->tableSize;
 }
 
 /*
@@ -195,8 +206,8 @@ int emptyBuckets(struct hashMap *ht)
  */
 float tableLoad(struct hashMap *ht)
 {  
-	/*TODO*/
-	return 0;
+	/* ✅ TODO*/
+	return ht->count / ht->tableSize;
 }
 
 /* print the hashMap */
