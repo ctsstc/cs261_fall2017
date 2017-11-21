@@ -120,7 +120,30 @@ This isn't elegant. Values have to be moved.
 */
 void _setTableSize(struct hashMap *ht, int newTableSize)
 {
-	/*TODO*/
+	/* ✅ TODO */
+	// Create a newer bigger better hash tree
+	hashMap* newMap = createMap(newTableSize);
+	hashLink* link;
+
+	// Push current values into the new hash
+	for(int i = 0; i < ht->tableSize; i++)
+	{
+		link = ht->table[i];
+		while (link != NULL)
+		{
+			insertMap(newMap, link->key, link->value);
+			link = link->next;
+		}
+	}
+
+	/* Dereferencing; idk dafaq this whichcraft is but it semi makes sense;
+	*		assign the value to the pointer?
+	* 	https://stackoverflow.com/questions/14224831/meaning-of-referencing-and-dereferencing
+	*/
+	*ht = *newMap;
+	// Release the kraken
+	free(newMap);
+
 }
 
 /*
@@ -180,7 +203,7 @@ void removeKey(struct hashMap *ht, KeyType k)
  */
 int size(struct hashMap *ht)
 {
-	/* ✅ TODO*/
+	/* ✅ TODO */
 	return ht->count;
 }
 
@@ -189,7 +212,7 @@ int size(struct hashMap *ht)
  */
 int capacity(struct hashMap *ht)
 {
-	/* ✅ TODO*/
+	/* ✅ TODO */
 	return ht->tableSize;
 }
 
@@ -199,8 +222,17 @@ int capacity(struct hashMap *ht)
  */
 int emptyBuckets(struct hashMap *ht)
 {
-	/*TODO*/
-	return 0;
+	/* ✅ TODO */
+	int emptyBuckets = 0;
+	// Iterate buckets and determine if they're empty
+	for(int i = 0; i < ht->tableSize; i++)
+	{
+		if (ht->table[i] == NULL)
+		{
+			emptyBuckets++;
+		}
+	}
+	return emptyBuckets;
 }
 
 /*
@@ -212,7 +244,7 @@ int emptyBuckets(struct hashMap *ht)
  */
 float tableLoad(struct hashMap *ht)
 {
-	/* ✅ TODO*/
+	/* ✅ TODO */
 	return ht->count / ht->tableSize;
 }
 
