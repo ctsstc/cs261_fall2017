@@ -4,34 +4,36 @@
 #include <assert.h>
 #include "hashMap.h"
 
-struct hashLink {
-   KeyType key; /*the key is what you use to look up a hashLink*/
-   ValueType value; /*the value stored with the hashLink, a pointer to int in the case of concordance*/
-   struct hashLink * next; /*notice how these are like linked list nodes*/
+struct hashLink
+{
+	KeyType key;					 /*the key is what you use to look up a hashLink*/
+	ValueType value;			 /*the value stored with the hashLink, a pointer to int in the case of concordance*/
+	struct hashLink *next; /*notice how these are like linked list nodes*/
 };
 typedef struct hashLink hashLink;
 
-struct hashMap {
-    hashLink ** table; /*array of pointers to hashLinks*/
-    int tableSize; /*number of buckets in the table*/
-    int count; /*number of hashLinks in the table*/
+struct hashMap
+{
+	hashLink **table; /*array of pointers to hashLinks*/
+	int tableSize;		/*number of buckets in the table*/
+	int count;				/*number of hashLinks in the table*/
 };
 typedef struct hashMap hashMap;
 
-int stringHash(char * str)
+int stringHash(char *str)
 {
 	if (HASHING_FUNCTION == 1)
 	{
 		return stringHash1(str);
 	}
-	else if(HASHING_FUNCTION == 2)
+	else if (HASHING_FUNCTION == 2)
 	{
 		return stringHash2(str);
 	}
 }
 
 /*the first hashing function you can use*/
-int stringHash1(char * str)
+int stringHash1(char *str)
 {
 	int i;
 	int r = 0;
@@ -41,33 +43,34 @@ int stringHash1(char * str)
 }
 
 /*the second hashing function you can use*/
-int stringHash2(char * str)
+int stringHash2(char *str)
 {
 	int i;
 	int r = 0;
 	for (i = 0; str[i] != '\0'; i++)
-		r += (i+1) * str[i]; // the difference between 1&2
+		r += (i + 1) * str[i]; // the difference between 1&2
 	return r;
 }
 
 /* initialize the supplied hashMap struct*/
-void _initMap (struct hashMap * ht, int tableSize)
+void _initMap(struct hashMap *ht, int tableSize)
 {
 	int index;
-	if(ht == NULL)
+	if (ht == NULL)
 		return;
-	ht->table = (hashLink**)malloc(sizeof(hashLink*) * tableSize);
+	ht->table = (hashLink **)malloc(sizeof(hashLink *) * tableSize);
 	ht->tableSize = tableSize;
 	ht->count = 0;
-	for(index = 0; index < tableSize; index++)
+	for (index = 0; index < tableSize; index++)
 		ht->table[index] = NULL;
 }
 
 /* allocate memory and initialize a hash map*/
-hashMap *createMap(int tableSize) {
+hashMap *createMap(int tableSize)
+{
 	assert(tableSize > 0);
 	hashMap *ht;
-	ht = (hashMap*)malloc(sizeof(hashMap));
+	ht = (hashMap *)malloc(sizeof(hashMap));
 	assert(ht != 0);
 	_initMap(ht, tableSize);
 	return ht;
@@ -77,30 +80,33 @@ hashMap *createMap(int tableSize) {
  Free all memory used by the buckets.
  Note: Before freeing up a hashLink, free the memory occupied by key and value
  */
- void _freeMap (struct hashMap * ht)
- {
- 	int i;
- 	struct hashLink *temp;
- 	struct hashLink *temp2;
- 	for(i=0; i<ht->tableSize; i++){
- 		temp=ht->table[i];
- 		while(temp!=0){
- 			temp2=temp->next;
- 			free(temp->key);
- 			free(temp->value); /* also free the memory pointed by value*/
- 			free(temp);
- 			temp=temp2;
- 		}
- 	}
- 	free(ht->table);
- 	ht->count=0;
- 	ht->table=0;
- 	ht->tableSize=0;	
- }
+void _freeMap(struct hashMap *ht)
+{
+	int i;
+	struct hashLink *temp;
+	struct hashLink *temp2;
+	for (i = 0; i < ht->tableSize; i++)
+	{
+		temp = ht->table[i];
+		while (temp != 0)
+		{
+			temp2 = temp->next;
+			free(temp->key);
+			free(temp->value); /* also free the memory pointed by value*/
+			free(temp);
+			temp = temp2;
+		}
+	}
+	free(ht->table);
+	ht->count = 0;
+	ht->table = 0;
+	ht->tableSize = 0;
+}
 
 /* Deallocate buckets and the hash map.*/
-void deleteMap(hashMap *ht) {
-	assert(ht!= 0);
+void deleteMap(hashMap *ht)
+{
+	assert(ht != 0);
 	/* Free all memory used by the buckets */
 	_freeMap(ht);
 	/* free the hashMap struct */
@@ -112,7 +118,7 @@ Resizes the hash table to be the size newTableSize
 Remember what you had to do for the dynamic array!
 This isn't elegant. Values have to be moved.
 */
-void _setTableSize(struct hashMap * ht, int newTableSize)
+void _setTableSize(struct hashMap *ht, int newTableSize)
 {
 	/*TODO*/
 }
@@ -129,7 +135,7 @@ void _setTableSize(struct hashMap * ht, int newTableSize)
  also, you must monitor the load factor and resize when the load factor is greater than
  or equal LOAD_FACTOR_THRESHOLD (defined in hashMap.h).
  */
-void insertMap (struct hashMap * ht, KeyType k, ValueType v)
+void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 {
 	/*TODO*/
 }
@@ -142,8 +148,8 @@ void insertMap (struct hashMap * ht, KeyType k, ValueType v)
  
  if the supplied key is not in the hashtable return NULL.
  */
-ValueType atMap (struct hashMap * ht, KeyType k)
-{ 
+ValueType atMap(struct hashMap *ht, KeyType k)
+{
 	/*TODO*/
 	return 0;
 }
@@ -152,8 +158,8 @@ ValueType atMap (struct hashMap * ht, KeyType k)
  a simple yes/no if the key is in the hashtable. 
  0 is no, all other values are yes.
  */
-int containsKey (struct hashMap * ht, KeyType k)
-{  
+int containsKey(struct hashMap *ht, KeyType k)
+{
 	/*TODO*/
 	return 0;
 }
@@ -164,16 +170,16 @@ int containsKey (struct hashMap * ht, KeyType k)
  cannot be found do nothing (or print a message) but do not use an assert which
  will end your program.
  */
-void removeKey (struct hashMap * ht, KeyType k)
-{  
-	/*TODO*/	
+void removeKey(struct hashMap *ht, KeyType k)
+{
+	/*TODO*/
 }
 
 /*
  returns the number of hashLinks in the table
  */
-int size (struct hashMap *ht)
-{  
+int size(struct hashMap *ht)
+{
 	/* ✅ TODO*/
 	return ht->count;
 }
@@ -182,7 +188,7 @@ int size (struct hashMap *ht)
  returns the number of buckets in the table
  */
 int capacity(struct hashMap *ht)
-{  
+{
 	/* ✅ TODO*/
 	return ht->tableSize;
 }
@@ -192,7 +198,7 @@ int capacity(struct hashMap *ht)
  no hashlinks hanging off of them.
  */
 int emptyBuckets(struct hashMap *ht)
-{  
+{
 	/*TODO*/
 	return 0;
 }
@@ -205,26 +211,29 @@ int emptyBuckets(struct hashMap *ht)
  are like linked list nodes so they can hang from each other)
  */
 float tableLoad(struct hashMap *ht)
-{  
+{
 	/* ✅ TODO*/
 	return ht->count / ht->tableSize;
 }
 
 /* print the hashMap */
-void printMap (struct hashMap * ht)
+void printMap(struct hashMap *ht)
 {
 	int i;
-	struct hashLink *temp;	
-	for(i = 0;i < capacity(ht); i++){
+	struct hashLink *temp;
+	for (i = 0; i < capacity(ht); i++)
+	{
 		temp = ht->table[i];
-		if(temp != 0) {		
-			printf("\nBucket Index %d -> ", i);		
+		if (temp != 0)
+		{
+			printf("\nBucket Index %d -> ", i);
 		}
-		while(temp != 0){			
+		while (temp != 0)
+		{
 			printf("Key:%s|", temp->key);
 			printValue(temp->value);
 			printf(" -> ");
-			temp=temp->next;			
-		}		
+			temp = temp->next;
+		}
 	}
 }
