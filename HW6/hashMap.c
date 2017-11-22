@@ -196,6 +196,10 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 	ht->table[index] = link;
 }
 
+/**
+ * Iterates the links to find a link by the given key in the corresponding bucket
+ * Helps dry up the code from redundant iterations
+ */
 hashLink* getLink(hashMap *ht, KeyType k)
 {
 	int index = stringHash(k);
@@ -224,9 +228,9 @@ hashLink* getLink(hashMap *ht, KeyType k)
  */
 ValueType atMap(struct hashMap *ht, KeyType k)
 {
-	/* TODO */
-	int index = stringHash(k);
-
+	/* ✅ TODO */
+	hashLink* link = getLink(ht, k);
+	return link == NULL ? NULL : link->value;
 }
 
 /*
@@ -248,6 +252,40 @@ int containsKey(struct hashMap *ht, KeyType k)
 void removeKey(struct hashMap *ht, KeyType k)
 {
 	/* TODO */
+	// Got dammit jannet, this ain't no double linked list or I'd be done already with my getLink
+	int index = stringHash(k);
+	hashLink* link = ht->table[index];
+	hashLink* previousLink = link;
+
+	// Short Circuit; not even close to existing
+	if (link == NULL)
+	{
+		return;
+	}
+
+	// Find our link while keeping track of the previous link
+	while(link != NULL && link->key != k)
+	{
+		previousLink = link;
+		link = link->next;
+	}
+
+	/// Slice'n Dice
+	// We're in first place
+	if (previousLink == link)
+	{
+		// You are the weakest link, goodbye
+		ht->table[index] = link->next;
+		// Only link that exists; rasta en pasta; so lonely
+		// At first I was going to check if next was null, but figured that doesn't matter
+	}
+	else
+	{
+		previousLink->next = link->next;
+	}
+
+	// Hide the evidence
+	free(link); // Take that Zelda I WIN
 }
 
 /*
