@@ -126,6 +126,7 @@ void _setTableSize(struct hashMap *ht, int newTableSize)
 	hashLink* link;
 
 	// Push current values into the new hash
+	// Iterate the buckets and the links
 	for(int i = 0; i < ht->tableSize; i++)
 	{
 		link = ht->table[i];
@@ -160,7 +161,39 @@ void _setTableSize(struct hashMap *ht, int newTableSize)
  */
 void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 {
-	/*TODO*/
+	/* ✅ TODO */
+
+	/** I'm resizing first rather than later because I was thinking that it requires one less move,
+	 * 	(Although I'm sure that move is very cheap anyways.)
+	 * 	but it could then leave the table overloaded if it's the last one added that tips the scales
+	 * 	wait... unless I increment numbers to begin with! Then it should be accurate.
+	*/
+	ht->count++;
+	if ((double)tableLoad(ht) >= LOAD_FACTOR_THRESHOLD)
+	{
+		_setTableSize(ht, size(ht) * 2);
+	}
+
+	/** Remove the key if it exists, I could have just removed the old value and 
+	 *	updated it (like the comments say) buuut ¯\_(ツ)_/¯
+	 *	I figure it cleans the code up go going this way, although it has more operations they'll be fast.
+	*/
+	if (containsKey(ht, k))
+	{
+		removeKey(ht, k);
+	}
+
+	int index = stringHash(k);
+	hashLink* link = (hashLink*) malloc(sizeof(struct hashLink));
+	hashLink* firstLink = ht->table[index];
+
+	// Init Link
+	link->key = k;
+	link->value = v;
+	link->next = firstLink; // Make the first link a second place link :magic:
+
+	// Push our link to the front
+	ht->table[index] = link;
 }
 
 /*
@@ -183,7 +216,20 @@ ValueType atMap(struct hashMap *ht, KeyType k)
  */
 int containsKey(struct hashMap *ht, KeyType k)
 {
-	/*TODO*/
+	/* ✅ TODO */
+	int index = stringHash(k);
+	hashLink* link = ht->table[index];
+
+	// Iterate our links in the given bucket
+	while(link != NULL) {
+		if(link->key == k)
+		{
+			return 9001; // Most definitely OVERLY YESSS!!!
+		}
+		link = link->next;
+	}
+
+	// Not found -RIP-
 	return 0;
 }
 
