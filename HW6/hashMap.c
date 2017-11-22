@@ -196,6 +196,24 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 	ht->table[index] = link;
 }
 
+hashLink* getLink(hashMap *ht, KeyType k)
+{
+	int index = stringHash(k);
+	hashLink* link = ht->table[index];
+
+	// Iterate our links in the given bucket
+	while(link != NULL) {
+		if(link->key == k)
+		{
+			return link; // Most definitely OVERLY YESSS!!!
+		}
+		link = link->next;
+	}
+
+	// Not found -RIP-
+	return NULL;
+}
+
 /*
  this returns the value (which is void*) stored in a hashLink specified by the key k.
  
@@ -206,8 +224,9 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
  */
 ValueType atMap(struct hashMap *ht, KeyType k)
 {
-	/*TODO*/
-	return 0;
+	/* TODO */
+	int index = stringHash(k);
+
 }
 
 /*
@@ -217,20 +236,7 @@ ValueType atMap(struct hashMap *ht, KeyType k)
 int containsKey(struct hashMap *ht, KeyType k)
 {
 	/* ✅ TODO */
-	int index = stringHash(k);
-	hashLink* link = ht->table[index];
-
-	// Iterate our links in the given bucket
-	while(link != NULL) {
-		if(link->key == k)
-		{
-			return 9001; // Most definitely OVERLY YESSS!!!
-		}
-		link = link->next;
-	}
-
-	// Not found -RIP-
-	return 0;
+	return getLink(ht, k) == NULL ? 0 : 9001; // Most definitely OVERLY YESSS!!!
 }
 
 /*
@@ -241,7 +247,7 @@ int containsKey(struct hashMap *ht, KeyType k)
  */
 void removeKey(struct hashMap *ht, KeyType k)
 {
-	/*TODO*/
+	/* TODO */
 }
 
 /*
