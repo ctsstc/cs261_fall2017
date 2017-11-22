@@ -1,0 +1,5 @@
+1	one top dog
+10	ten
+50	fifty
+100	hundo
+25	twenty fiver
