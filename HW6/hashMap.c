@@ -20,16 +20,18 @@ struct hashMap
 };
 typedef struct hashMap hashMap;
 
-int stringHash(char *str)
+int stringHash(hashMap* ht, char *str)
 {
+	int hash;
 	if (HASHING_FUNCTION == 1)
 	{
-		return stringHash1(str);
+		hash = stringHash1(str) ;
 	}
 	else if (HASHING_FUNCTION == 2)
 	{
-		return stringHash2(str);
+		hash = stringHash2(str);
 	}
+	return hash % ht->tableSize;
 }
 
 /*the first hashing function you can use*/
@@ -183,7 +185,7 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 		removeKey(ht, k);
 	}
 
-	int index = stringHash(k);
+	int index = stringHash(ht, k);
 	hashLink* link = (hashLink*) malloc(sizeof(struct hashLink));
 	hashLink* firstLink = ht->table[index];
 
@@ -202,7 +204,7 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
  */
 hashLink* getLink(hashMap *ht, KeyType k)
 {
-	int index = stringHash(k);
+	int index = stringHash(ht, k);
 	hashLink* link = ht->table[index];
 
 	// Iterate our links in the given bucket
@@ -253,7 +255,7 @@ void removeKey(struct hashMap *ht, KeyType k)
 {
 	/* ✅ TODO */
 	// Got dammit jannet, this ain't no double linked list or I'd be done already with my getLink
-	int index = stringHash(k);
+	int index = stringHash(ht, k);
 	hashLink* link = ht->table[index];
 	hashLink* previousLink = link;
 
