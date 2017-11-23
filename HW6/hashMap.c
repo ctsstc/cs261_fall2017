@@ -20,7 +20,7 @@ struct hashMap
 };
 typedef struct hashMap hashMap;
 
-int stringHash(hashMap* ht, char *str)
+int _stringHash(hashMap* ht, char *str)
 {
 	int hash;
 	if (HASHING_FUNCTION == 1)
@@ -185,7 +185,7 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
 		removeKey(ht, k);
 	}
 
-	int index = stringHash(ht, k);
+	int index = _stringHash(ht, k);
 	hashLink* link = (hashLink*) malloc(sizeof(struct hashLink));
 	hashLink* firstLink = ht->table[index];
 
@@ -202,9 +202,9 @@ void insertMap(struct hashMap *ht, KeyType k, ValueType v)
  * Iterates the links to find a link by the given key in the corresponding bucket
  * Helps dry up the code from redundant iterations
  */
-hashLink* getLink(hashMap *ht, KeyType k)
+hashLink* _getlink(hashMap *ht, KeyType k)
 {
-	int index = stringHash(ht, k);
+	int index = _stringHash(ht, k);
 	hashLink* link = ht->table[index];
 
 	// Iterate our links in the given bucket
@@ -231,7 +231,7 @@ hashLink* getLink(hashMap *ht, KeyType k)
 ValueType atMap(struct hashMap *ht, KeyType k)
 {
 	/* ✅ TODO */
-	hashLink* link = getLink(ht, k);
+	hashLink* link = _getlink(ht, k);
 	return link == NULL ? NULL : link->value;
 }
 
@@ -242,7 +242,7 @@ ValueType atMap(struct hashMap *ht, KeyType k)
 int containsKey(struct hashMap *ht, KeyType k)
 {
 	/* ✅ TODO */
-	return getLink(ht, k) == NULL ? 0 : 9001; // Most definitely OVERLY YESSS!!!
+	return _getlink(ht, k) == NULL ? 0 : 9001; // Most definitely OVERLY YESSS!!!
 }
 
 /*
@@ -255,7 +255,8 @@ void removeKey(struct hashMap *ht, KeyType k)
 {
 	/* ✅ TODO */
 	// Got dammit jannet, this ain't no double linked list or I'd be done already with my getLink
-	int index = stringHash(ht, k);
+	// Or if it was a bag I'd zip zabbidy do be done now
+	int index = _stringHash(ht, k);
 	hashLink* link = ht->table[index];
 	hashLink* previousLink = link;
 
