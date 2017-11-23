@@ -251,11 +251,12 @@ int containsKey(struct hashMap *ht, KeyType k)
  */
 void removeKey(struct hashMap *ht, KeyType k)
 {
-	/* TODO */
+	/* ✅ TODO */
 	// Got dammit jannet, this ain't no double linked list or I'd be done already with my getLink
 	int index = stringHash(k);
 	hashLink* link = ht->table[index];
 	hashLink* previousLink = link;
+
 
 	// Short Circuit; not even close to existing
 	if (link == NULL)
@@ -264,10 +265,21 @@ void removeKey(struct hashMap *ht, KeyType k)
 	}
 
 	// Find our link while keeping track of the previous link
-	while(link != NULL && link->key != k)
+	while(link != NULL)
 	{
+		// Found it Coach
+		if (link->key == k)
+		{
+			break;
+		}
 		previousLink = link;
 		link = link->next;
+	}
+
+	// Link not found 404; rage quit
+	if (link == NULL)
+	{
+		return;
 	}
 
 	/// Slice'n Dice
@@ -285,7 +297,10 @@ void removeKey(struct hashMap *ht, KeyType k)
 	}
 
 	// Hide the evidence
+	free(link->key);
+	free(link->value);
 	free(link); // Take that Zelda I WIN
+	ht->count--;
 }
 
 /*
@@ -335,7 +350,7 @@ int emptyBuckets(struct hashMap *ht)
 float tableLoad(struct hashMap *ht)
 {
 	/* ✅ TODO */
-	return ht->count / ht->tableSize;
+	return (float)ht->count / (float)ht->tableSize;
 }
 
 /* print the hashMap */
